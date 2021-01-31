@@ -1,0 +1,19 @@
+version: 2.1
+
+jobs:
+
+  create_infrastructure:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - command: |
+          aws cloudformation deploy \
+            --stack-name inventory-file-circle-ci \
+            --template-file template-aws.yml
+
+workflows:
+
+  create_infrastructure_on_aws:
+    jobs:
+      - create_infrastructure
